@@ -116,6 +116,50 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text('Avatar Customization'),
             ),
+            // Additional ElevatedButton for Tutorial
+            ElevatedButton(
+              onPressed: () {
+                // Action when Tutorial button is pressed
+                Navigator.pushNamed(context, 'tutorial');
+                // You can navigate to the tutorial page or perform any other action here
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue, // Background Color of the button
+                foregroundColor: Colors.white, // Text color of the button
+                padding: EdgeInsets.symmetric(
+                    vertical: 15.0,
+                    horizontal: 40.0), // Padding around the button text
+                textStyle:
+                    TextStyle(fontSize: 18.0), // Text style of the button text
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                ),
+              ),
+              child: Text('Tutorial'), // Text displayed on the button
+            ),
+            // Additional ElevatedButton for Programming Challenge
+            ElevatedButton(
+              onPressed: () {
+                // Action when Programming Challenge button is pressed
+                // You can navigate to the challenge page or perform any other action here
+                Navigator.pushNamed(context, '/programming_challenge');
+
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green, // Background color of the button
+                foregroundColor: Colors.white, // Text color of the button 
+                padding: EdgeInsets.symmetric(
+                    vertical: 15.0,
+                    horizontal: 40.0), // Padding around the button text
+                textStyle:
+                    TextStyle(fontSize: 18.0), // Text style of the button text
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                ),
+              ),
+              child:
+                  Text('Programming Challenge'), // Text displayed on the button
+            ),
           ],
         ),
       ),
@@ -156,9 +200,25 @@ class Routes {
         return const AboutScreen();
       },
     ));
+    // Define the route for Avatar Customization
+    router.define('/tutorial', handler: Handler(
+      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+        return const TutorialWidget();
+      },
+    ));
+     // Define the route for Programming Challenge
+    router.define('/programming_challenge', handler: Handler(
+      handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+        return ProgrammingChallengeWidget(
+          challengeDescription: 'Create a Flutter app with two screens and navigate between them.',
+          onCodeSubmit: () {
+            // Handle code submission
+          },
+        );
+      },
+    ));
   }
 }
-
 
 // Animation Alley screen widget
 class AnimationAlley extends StatelessWidget {
@@ -181,7 +241,9 @@ class AnimationAlley extends StatelessWidget {
               // Navigate to details page for Animation 1
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AnimationDetails(animationName: 'Animation 1')),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        AnimationDetails(animationName: 'Animation 1')),
               );
             },
           ),
@@ -192,7 +254,9 @@ class AnimationAlley extends StatelessWidget {
               // Navigate to details page for Animation 2
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AnimationDetails(animationName: 'Animation 2')),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        AnimationDetails(animationName: 'Animation 2')),
               );
             },
           ),
@@ -206,7 +270,8 @@ class AnimationAlley extends StatelessWidget {
 class AnimationDetails extends StatelessWidget {
   final String animationName;
 
-  const AnimationDetails({Key? key, required this.animationName}) : super(key: key);
+  const AnimationDetails({Key? key, required this.animationName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -247,7 +312,8 @@ class AvatarCustomizationScreen extends StatelessWidget {
               // Navigate to Avatar Color customization screen
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AvatarColorCustomization()),
+                MaterialPageRoute(
+                    builder: (context) => AvatarColorCustomization()),
               );
             },
           ),
@@ -258,7 +324,8 @@ class AvatarCustomizationScreen extends StatelessWidget {
               // Navigate to Avatar Style customization screen
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AvatarStyleCustomization()),
+                MaterialPageRoute(
+                    builder: (context) => AvatarStyleCustomization()),
               );
             },
           ),
@@ -311,7 +378,6 @@ class AvatarStyleCustomization extends StatelessWidget {
     );
   }
 }
-
 
 // Settings screen widget
 class SettingsScreen extends StatelessWidget {
@@ -373,6 +439,91 @@ class AboutScreen extends StatelessWidget {
         child: Text(
           'About this App',
           style: TextStyle(fontSize: 24.0),
+        ),
+      ),
+    );
+  }
+}
+
+// Tutorial component
+class TutorialWidget extends StatelessWidget {
+  const TutorialWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Welcome to Flutter Funland!',
+            style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+          ),
+          SizedBox(height: 10.0),
+          Text(
+            'Let\'s learn how to write Flutter code!',
+            style: TextStyle(fontSize: 18.0),
+          ),
+          // Additional tutorial content can be added here
+        ],
+      ),
+    );
+  }
+}
+
+// Programming challenge component
+class ProgrammingChallengeWidget extends StatelessWidget {
+  final String challengeDescription;
+  final Function onCodeSubmit;
+
+  const ProgrammingChallengeWidget({
+    Key? key,
+    required this.challengeDescription,
+    required this.onCodeSubmit,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Programming Challenge'),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Challenge:',
+              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10.0),
+            Text(
+              challengeDescription,
+              style: const TextStyle(fontSize: 18.0),
+            ),
+            const SizedBox(height: 20.0),
+            const Text(
+              'Your Code:',
+              style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10.0),
+            const TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Write your Dart code here',
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                // Call the function to submit code
+                onCodeSubmit();
+              },
+              child: const Text('Submit'),
+            ),
+          ],
         ),
       ),
     );
