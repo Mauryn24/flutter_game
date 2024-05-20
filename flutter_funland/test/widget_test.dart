@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_funland/main.dart'; // Update with the correct path to your app's main.dart
+import 'package:flutter_funland/main.dart';
+import 'package:fluro/fluro.dart';
 
 void main() {
-  testWidgets('Widget Test Example', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(FunlandApp()); // Update with your app's root widget
+  final FluroRouter router = FluroRouter();
+  Routes.configureRoutes(router);
 
-    // Verify that the app starts on the main game screen.
-    expect(find.text('Welcome to Flutter Funland!'), findsOneWidget);
+  testWidgets('HomeScreen has two buttons', (WidgetTester tester) async {
+    await tester.pumpWidget(FunlandApp(router: router));
 
-    // Example test: Verify navigation to Widget Workshop screen.
-    await tester.tap(find.text('Enter Widget Workshop'));
-    await tester.pumpAndSettle(); // Wait for navigation transition to complete
-    expect(find.text('Learn about Flutter Widgets here!'), findsOneWidget);
-    
-    // Example test: Verify navigation back to main game screen.
-    await tester.tap(find.byIcon(Icons.arrow_back)); // Assuming a back button is present
-    await tester.pumpAndSettle(); // Wait for navigation transition to complete
-    expect(find.text('Welcome to Flutter Funland!'), findsOneWidget);
+    expect(find.text('Animation Alley'), findsOneWidget);
+    expect(find.text('Avatar Customization'), findsOneWidget);
+  });
+
+  testWidgets('Navigates to AnimationAlley when button is pressed', (WidgetTester tester) async {
+    await tester.pumpWidget(FunlandApp(router: router));
+
+    await tester.tap(find.text('Animation Alley'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Welcome to Animation Alley!'), findsOneWidget);
+  });
+
+  testWidgets('Navigates to AvatarCustomizationScreen when button is pressed', (WidgetTester tester) async {
+    await tester.pumpWidget(FunlandApp(router: router));
+
+    await tester.tap(find.text('Avatar Customization'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Welcome to Avatar Customization!'), findsOneWidget);
   });
 }
