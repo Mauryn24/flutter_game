@@ -1,46 +1,89 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_funland/main.dart';
-import 'package:fluro/fluro.dart';
+import 'package:flutter_funland/main.dart'; // Update to your actual main file path
+import 'package:flutter_funland/screens/home_screen.dart'; // Update to your actual home screen path
 
 void main() {
-  // Initialize the FluroRouter and configure the routes.
-  final FluroRouter router = FluroRouter();
-  Routes.configureRoutes(router);
+  testWidgets('HomeScreen displays buttons and navigates correctly', (WidgetTester tester) async {
+    // Build the HomeScreen widget
+    await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
 
-  // Test to verify that the HomeScreen has two buttons.
-  testWidgets('HomeScreen has two buttons', (WidgetTester tester) async {
-    // Build the FunlandApp widget and trigger a frame.
-    await tester.pumpWidget(FunlandApp(router: router));
-
-    // Verify that the buttons with text 'Animation Alley' and 'Avatar Customization' are present.
+    // Verify that the HomeScreen displays the correct buttons
+    expect(find.text('Tutorial'), findsOneWidget);
     expect(find.text('Animation Alley'), findsOneWidget);
     expect(find.text('Avatar Customization'), findsOneWidget);
-  });
+    expect(find.text('Programming Challenge'), findsOneWidget);
 
-  // Test to verify navigation to AnimationAlley when the button is pressed.
-  testWidgets('Navigates to AnimationAlley when button is pressed', (WidgetTester tester) async {
-    // Build the FunlandApp widget and trigger a frame.
-    await tester.pumpWidget(FunlandApp(router: router));
+    // Tap on the 'Tutorial' button and verify navigation
+    await tester.tap(find.text('Tutorial'));
+    await tester.pumpAndSettle();
+    expect(find.text('Welcome to Flutter Funland!'), findsOneWidget);
 
-    // Tap the button with text 'Animation Alley' and trigger a frame.
+    // Return to HomeScreen
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    // Tap on the 'Animation Alley' button and verify navigation
     await tester.tap(find.text('Animation Alley'));
     await tester.pumpAndSettle();
+    expect(find.text('Animation Alley'), findsOneWidget);
 
-    // Verify that the AnimationAlley screen is displayed by checking for the presence of specific text.
-    expect(find.text('Welcome to Animation Alley!'), findsOneWidget);
-  });
-
-  // Test to verify navigation to AvatarCustomizationScreen when the button is pressed.
-  testWidgets('Navigates to AvatarCustomizationScreen when button is pressed', (WidgetTester tester) async {
-    // Build the FunlandApp widget and trigger a frame.
-    await tester.pumpWidget(FunlandApp(router: router));
-
-    // Tap the button with text 'Avatar Customization' and trigger a frame.
-    await tester.tap(find.text('Avatar Customization'));
+    // Return to HomeScreen
+    await tester.tap(find.byTooltip('Back'));
     await tester.pumpAndSettle();
 
-    // Verify that the AvatarCustomizationScreen is displayed by checking for the presence of specific text.
-    expect(find.text('Welcome to Avatar Customization!'), findsOneWidget);
+    // Tap on the 'Avatar Customization' button and verify navigation
+    await tester.tap(find.text('Avatar Customization'));
+    await tester.pumpAndSettle();
+    expect(find.text('Avatar Customization'), findsOneWidget);
+
+    // Return to HomeScreen
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    // Tap on the 'Programming Challenge' button and verify navigation
+    await tester.tap(find.text('Programming Challenge'));
+    await tester.pumpAndSettle();
+    expect(find.text('Challenge:'), findsOneWidget);
+  });
+
+  testWidgets('Navigating through the drawer menu', (WidgetTester tester) async {
+    // Build the HomeScreen widget
+    await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+
+    // Open the drawer
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+
+    // Tap on the 'Settings' menu item and verify navigation
+    await tester.tap(find.text('Settings'));
+    await tester.pumpAndSettle();
+    expect(find.text('Settings Page'), findsOneWidget);
+
+    // Return to HomeScreen
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    // Open the drawer again
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+
+    // Tap on the 'Profile' menu item and verify navigation
+    await tester.tap(find.text('Profile'));
+    await tester.pumpAndSettle();
+    expect(find.text('Profile Page'), findsOneWidget);
+
+    // Return to HomeScreen
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+
+    // Open the drawer again
+    await tester.tap(find.byTooltip('Open navigation menu'));
+    await tester.pumpAndSettle();
+
+    // Tap on the 'About' menu item and verify navigation
+    await tester.tap(find.text('About'));
+    await tester.pumpAndSettle();
+    expect(find.text('About this App'), findsOneWidget);
   });
 }
