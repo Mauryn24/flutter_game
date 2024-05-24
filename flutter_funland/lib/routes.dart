@@ -36,7 +36,7 @@ class Routes {
     // Define the route for the sign-up screen
     router.define('/signup', handler: Handler(
       handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-        return const SignupScreen();
+        return const SignUpScreen();
       },
     ));
 

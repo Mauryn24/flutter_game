@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_funland/screens/home_screen.dart'; // Update with your actual file path
+import 'package:flutter_funland/screens/signup_screen.dart'; // Update with your actual file path
 
 class AuthScreen extends StatelessWidget {
-  const AuthScreen({super.key}); // Use super parameter for key
+  const AuthScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,34 +26,35 @@ class AuthScreen extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'Password',
               ),
-              obscureText: true, // Correct parameter for obscuring text
+              obscureText: true,
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                // Handle login action
+                // Placeholder logic for login
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                );
               },
               child: const Text('Login'),
             ),
-            const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Don't have an account? "),
-                GestureDetector(
-                  onTap: () {
-                    // Navigate to the sign-up screen
-                    Navigator.pushNamed(context, '/signup');
-                  },
-                  child: const Text(
-                    'Sign up',
-                    style: TextStyle(
-                      color: Colors.blue,
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
+            const SizedBox(height: 10.0),
+            GestureDetector(
+              onTap: () {
+                // Navigate to SignUpScreen when sign up link is tapped
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                );
+              },
+              child: const Text(
+                'Not signed up? Click here to sign up',
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
                 ),
-              ],
+              ),
             ),
           ],
         ),

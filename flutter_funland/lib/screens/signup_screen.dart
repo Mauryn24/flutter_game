@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_funland/screens/auth_screen.dart'; // Update with your actual file path
 
-class SignupScreen extends StatelessWidget {
-  const SignupScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,11 @@ class SignupScreen extends StatelessWidget {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                // Handle sign-up action and navigate to home screen
-                Navigator.pushReplacementNamed(context, '/home');
+                // Handle sign-up action and navigate to login screen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AuthScreen()),
+                );
               },
               child: const Text('Sign Up'),
             ),
